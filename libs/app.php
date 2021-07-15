@@ -37,7 +37,7 @@ class App
 
                         for ($i = 0; $i < $nparams; $i++)
                         {
-                            array_push($params, $url[$i] + 2);
+                            array_push($params, $url[$i + 2]);
                         }
 
                         $controller->{$url[1]}($params);
@@ -51,6 +51,7 @@ class App
                 else
                 {
                     // el action no existe en el controlador
+                    error_log('no se encontró el action: ' . $url[1] . ' para el controlador: ' . $url[0]);
                 }
             }
             else
@@ -61,7 +62,7 @@ class App
         } 
         else
         {
-            error_log('no se encontró un controlador para: ' . $url[0]);
+            //error_log('no se encontró un controlador para: ' . $url[0]);
         }
     }
 }
