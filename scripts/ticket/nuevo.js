@@ -7,12 +7,18 @@ $(document).ready(function()
 function lnkAceptar()
 {
     event.preventDefault();
-
-    $('#divBotones').hide();
     $('#divMensajes').html('Espere...');
     var descripcionError = $('#txtDescripcionError').val();
     var fechaError = $('#txtFechaError').val();
 
+    if (descripcionError == '' || fechaError == '')
+    {
+        $('#divMensajes').html('Todos los datos son requeridos.');
+        return false;
+    }
+
+    $('#divBotones').hide();
+    
     $.ajax({
 		type: 'post',
 		url: '/saf-portal/ticket/nuevoguardar',

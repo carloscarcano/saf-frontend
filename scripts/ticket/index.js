@@ -1,9 +1,8 @@
 $(document).ready(function() 
 {
+    $('#divMensajes').hide();
     $('#lnkNuevo').click(lnkNuevo);
-    $('#lnkConsultar').click(lnkConsultar);
-    $('#lnkModificar').click(lnkModificar);
-    $('#lnkEliminar').click(lnkEliminar);
+    $('#btnHeaderAceptar').click(btnAceptar);
 });
 
 function lnkNuevo()
@@ -11,35 +10,29 @@ function lnkNuevo()
     location.href = "/saf-portal/ticket/nuevo";
 }
 
-function lnkConsultar()
+function btnAceptar()
 {
-    $('#divMensajes').html('');
-    var idTicket = $('#txtIdTicket').val();
+    cmbOpciones = $('#cmbHeaderOpciones').val();
+    idTicket = $('#txtHeaderIdTicket').val();
+
+    if (cmbOpciones == 0)
+    {
+        alert('Faltar seleccionar una opción de la lista');
+        return false;
+    }
 
     if (idTicket == '')
-        $('#divMensajes').html('Falta ingresar el número de ticket que quiere consultar.');
-    else
-        location.href = '/saf-portal/ticket/consultar/' + idTicket;
-}
+    {
+        alert('Falta ingresar un número de ticket');
+        return false;
+    }
 
-function lnkModificar()
-{
-    $('#divMensajes').html('');
-    var idTicket = $('#txtIdTicket').val();
+    $('#divMensajes').show();
+    $('#cmbHeaderOpciones').prop('disabled', true);
+    $('#txtHeaderIdTicket').prop('disabled', true);
+    $('#btnHeaderAceptar').prop('disabled', true);
 
-    if (idTicket == '')
-        $('#divMensajes').html('Falta ingresar el número de ticket que quiere modificar.');
-    else
-        location.href = '/saf-portal/ticket/modificar/' + idTicket;
-}
-
-function lnkEliminar()
-{
-    $('#divMensajes').html('');
-    var idTicket = $('#txtIdTicket').val();
-
-    if (idTicket == '')
-        $('#divMensajes').html('Falta ingresar el número de ticket que quiere eliminar.');
-    else
-        location.href = '/saf-portal/ticket/eliminar/' + idTicket;
+    if (cmbOpciones == 1) { location.href = '/saf-portal/ticket/consultar/' + idTicket; }
+    if (cmbOpciones == 2) { location.href = '/saf-portal/ticket/modificar/' + idTicket; }
+    if (cmbOpciones == 3) { location.href = '/saf-portal/ticket/eliminar/' + idTicket; } 
 }

@@ -7,12 +7,20 @@ $(document).ready(function()
 function lnkAceptar()
 {
     event.preventDefault();
+    $('#divMensajes').html('Espere...');
 
-    $('#divMensajes').html('');
-    var idTicket = $('#lblTicket').html();
+    var idTicket = $('#txtIdTicket').val();
     var descripcionError = $('#txtDescripcionError').val();
     var fechaError = $('#txtFechaError').val();
     var idEstadoTicket = $('#cmbEstadoTicket').val();
+
+    if (descripcionError == '' || fechaError == '')
+    {
+        $('#divMensajes').html('Todos los datos son requeridos.');
+        return false;
+    }
+
+    $('#divBotones').hide();
 
     $.ajax({
 		type: 'post',

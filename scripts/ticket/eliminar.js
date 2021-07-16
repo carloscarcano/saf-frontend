@@ -7,10 +7,12 @@ $(document).ready(function()
 function lnkEliminar()
 {
     event.preventDefault();
+    $('#divMensajes').html('Espere...');
 
-    $('#divMensajes').html('');
-    var idTicket = $('#lblTicket').html();
+    var idTicket = $('#txtIdTicket').val();
 
+    $('#divBotones').hide();
+    
     $.ajax({
 		type: 'post',
 		url: '/saf-portal/ticket/eliminaraceptar',
