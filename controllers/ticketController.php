@@ -13,11 +13,12 @@ class ticketController extends Controller
 
     function nuevoguardar()
     {
+        $idUsuario = session::obtenerSesion()['usuarioId'];
         $descripcionError = $_POST['descripcionError'];
         $fechaError = $_POST['fechaError'];
         
         $datosJSON = json_encode([
-            "idUsuario" => "1",
+            "idUsuario" => $idUsuario,
             "descripcionError" => $descripcionError,
             "fechaError" => $fechaError
         ]);
@@ -125,6 +126,62 @@ class ticketController extends Controller
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'PATCH',
           CURLOPT_POSTFIELDS => $datosJSON,
+          CURLOPT_HTTPHEADER => array('Content-Type: application/json')
+        ));
+        
+        $response = curl_exec($curl);
+        $httpCodeResponse = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        $responseJSON = json_decode($response, true);
+
+        $result = array();
+        $result['httpCode'] = $httpCodeResponse;
+
+        if ($httpCodeResponse =! 200)   
+            $result['mensaje'] = $responseJSON['mensaje'];
+
+        echo json_encode($result);
+    }
+
+    function eliminar($parametros)
+    {
+        $idTicket = $parametros[0];
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, constant('API_REST_BASE_URL') . $idTicket);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($curl);
+        $httpCodeResponse = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        curl_close($curl);
+        $responseJSON = json_decode($response, true);
+
+        $viewData = [
+            'idTicket' => $idTicket,
+            'descripcionError' => $responseJSON['descripcionError'],
+            'fechaError' => $responseJSON['fechaError'],
+            'fechaTicket' => $responseJSON['fechaTicket'],
+            'idEstadoTicket' => $responseJSON['idEstadoTicket'],
+            'estadoTicket' => $this->obtenerEstadoTicket($responseJSON['idEstadoTicket']),
+        ];
+
+        $this->view->render('ticket/eliminar', $viewData);
+    }
+
+    function eliminaraceptar()
+    {
+        $idTicket = $_POST['idTicket'];
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => constant('API_REST_BASE_URL') . $idTicket,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'DELETE',
           CURLOPT_HTTPHEADER => array('Content-Type: application/json')
         ));
         

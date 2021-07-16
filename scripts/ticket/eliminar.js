@@ -1,37 +1,28 @@
 $(document).ready(function() 
 {
-    $('#lnkAceptar').click(lnkAceptar);
+    $('#lnkEliminar').click(lnkEliminar);
     $('#lnkCancelar').click(lnkCancelar);
 });
 
-function lnkAceptar()
+function lnkEliminar()
 {
     event.preventDefault();
     $('#divMensajes').html('Espere...');
 
     var idTicket = $('#txtIdTicket').val();
-    var descripcionError = $('#txtDescripcionError').val();
-    var fechaError = $('#txtFechaError').val();
-    var idEstadoTicket = $('#cmbEstadoTicket').val();
-
-    if (descripcionError == '' || fechaError == '')
-    {
-        $('#divMensajes').html('Todos los datos son requeridos.');
-        return false;
-    }
 
     $('#divBotones').hide();
-
+    
     $.ajax({
 		type: 'post',
-		url: '/saf-portal/ticket/modificarguardar',
+		url: '/saf-portal/ticket/eliminaraceptar',
 		dataType: 'json',
-		data: { 'idTicket': idTicket, 'descripcionError': descripcionError, 'fechaError': fechaError, 'idEstadoTicket': idEstadoTicket }
+		data: { 'idTicket': idTicket }
 	}).done(function(datos) 
 	{
         if (datos.httpCode == 200)
         {
-            alert('El ticket se actualizó correctamente');
+            alert('El ticket se eliminó correctamente');
             location.href = "/saf-portal/ticket";
         }
         else

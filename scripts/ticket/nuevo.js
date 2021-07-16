@@ -7,11 +7,18 @@ $(document).ready(function()
 function lnkAceptar()
 {
     event.preventDefault();
-
-    $('#divMensajes').html('');
+    $('#divMensajes').html('Espere...');
     var descripcionError = $('#txtDescripcionError').val();
     var fechaError = $('#txtFechaError').val();
 
+    if (descripcionError == '' || fechaError == '')
+    {
+        $('#divMensajes').html('Todos los datos son requeridos.');
+        return false;
+    }
+
+    $('#divBotones').hide();
+    
     $.ajax({
 		type: 'post',
 		url: '/saf-portal/ticket/nuevoguardar',
@@ -21,7 +28,8 @@ function lnkAceptar()
 	{
         if (datos.httpCode == 201)
         {
-            location.href = "/saf-portal/ticket";
+            alert('Se agregó el ticket correctamente, no. asignado: ' + datos.idTicket);
+            location.href = '/saf-portal/ticket';
         }
         else
         {

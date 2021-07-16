@@ -7,6 +7,7 @@ ini_set('log_errors', TRUE);
 ini_set("error_log", "php-error.log");
 
 require_once 'config/config.php';
+require_once 'libs/session.php';
 require_once 'libs/controller.php';
 require_once 'libs/view.php';
 require_once 'libs/app.php';
