@@ -8,7 +8,8 @@ function lnkAceptar()
 {
     event.preventDefault();
 
-    $('#divMensajes').html('');
+    $('#divBotones').hide();
+    $('#divMensajes').html('Espere...');
     var descripcionError = $('#txtDescripcionError').val();
     var fechaError = $('#txtFechaError').val();
 
@@ -21,7 +22,8 @@ function lnkAceptar()
 	{
         if (datos.httpCode == 201)
         {
-            location.href = "/saf-portal/ticket";
+            alert('Se agregó el ticket correctamente, no. asignado: ' + datos.idTicket);
+            location.href = '/saf-portal/ticket';
         }
         else
         {

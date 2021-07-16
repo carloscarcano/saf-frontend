@@ -14,10 +14,13 @@
 
     <form>
         <label>Usuario</label>
-        <input id="txtUsuario" type="text" size="20" />
+        <input id="txtUsuario" type="text" size="20" maxlength="10" />
         <label>Contraseña</label>
-        <input id="txtContrasena" type="password" size="20" />
+        <input id="txtPassword" type="password" size="20" maxlength="10" />
         <input id="btnAceptar" type="button" value="Aceptar" />
     </form>
+
+    <br><br>
+    <div id="divMensajes"></div>
 </body>
 </html>

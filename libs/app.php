@@ -7,8 +7,18 @@ class App
         $url = rtrim($url, '/');
         $url = explode('/', $url);
 
+        session::recuperarSesion();
+
         if(empty($url[0]))
         {
+            error_log('url vacía');
+
+            if (session::existeSesion())
+            {
+                error_log('sesión iniciada, redireccionando a página principal');
+                header('location: /saf-portal/ticket');
+            }
+
             require_once 'controllers/' . constant('DEFAULT_CONTROLLER') . 'Controller.php';
             $nombreClase = constant('DEFAULT_CONTROLLER') . 'Controller';
 
@@ -20,6 +30,15 @@ class App
         $archivoController = 'controllers/' . $url[0] . 'Controller.php';
         if (file_exists($archivoController))
         {
+            error_log('url con controlador ' . $archivoController);
+
+            if ($url[0] != 'login')
+                if (!session::existeSesion())
+                {
+                    error_log('intento de entrada directa, redireccionando a login');
+                    header('location: /saf-portal');
+                }
+
             require_once $archivoController;
             $nombreClase = $url[0] . 'Controller';
 

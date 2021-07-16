@@ -22,7 +22,9 @@
     <div id="divMensajes"></div>
     <br><br>
     
-    <a href="#" id="lnkAceptar">Aceptar</a>
-    <a href="#" id="lnkCancelar">Cancelar</a>
+    <div id="divBotones">
+        <a href="#" id="lnkAceptar">Aceptar</a>
+        <a href="#" id="lnkCancelar">Cancelar</a>
+    </div>
 </body>
 </html>
