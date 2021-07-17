@@ -26,7 +26,7 @@
     <form>
         <div class="col-4" style="padding-top: 16px;">
             <label for="txtIdTicket" class="form-label">No. Ticket:</label>
-            <input id="txtIdTicket" type="text" class="form-control" value="<?php echo $this->viewData('idTicket'); ?>" />
+            <input id="txtIdTicket" type="text" class="form-control" value="<?php echo $this->viewData('idTicket'); ?>" disabled />
         </div>
         <?php if ($this->viewData('descripcionError') == ''): ?>
             <div class="col-6" style="padding-top: 20px;">
@@ -45,8 +45,12 @@
                 <input id="txtDescripcionError" type="text" class="form-control" maxlength="500" value="<?php echo $this->viewData('descripcionError'); ?>" />
             </div>
             <div class="col-4" style="padding-top: 16px;">
+                <?php 
+                    $fechaDMA = explode('/', $this->viewData('fechaError')); 
+                    $fechaAMD = $fechaDMA[2] . '-' . $fechaDMA[1] . '-' . $fechaDMA[0];
+                ?>
                 <label for="txtFechaError" class="form-label">Fecha del error:</label>
-                <input id="txtFechaError" type="text" class="form-control" maxlength="10" value="<?php echo $this->viewData('fechaError'); ?>" />
+                <input id="txtFechaError" type="date" class="form-control" value="<?php echo $fechaAMD; ?>" />
             </div>
             <div class="col-4" style="padding-top: 16px;">
                 <label for="txtFechaTicket" class="form-label">Fecha de registro:</label>

@@ -30,7 +30,7 @@
             </div>
             <div class="col-4" style="padding-top: 20px;">
                 <label for="txtFechaError" class="form-label">Fecha del error:</label>
-                <input id="txtFechaError" type="text" maxlength="10" class="form-control" placeholder="dd/mm/aaaa" />
+                <input id="txtFechaError" type="date" class="form-control" />
             </div>
             <div class="col-4" style="padding-top: 30px;">
                 <div id="divBotones">
